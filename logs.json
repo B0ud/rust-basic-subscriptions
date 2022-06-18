@@ -1,0 +1,136 @@
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[ADDING A NEW SUBSCRIBER - START]",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6682025Z",
+    "target": "zero2prod::routes::subscriptions",
+    "line": 13,
+    "file": "src\\routes\\subscriptions.rs",
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[SAVING NEW SUBSCRIBER DETAILS IN THE DATABASE - START]",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6688414Z",
+    "target": "zero2prod::routes::subscriptions",
+    "line": 23,
+    "file": "src\\routes\\subscriptions.rs",
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[SAVING NEW SUBSCRIBER DETAILS IN THE DATABASE - EVENT] /* SQLx ping */; rows affected: 0, rows returned: 0, elapsed: 710.300µs",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6706333Z",
+    "target": "log",
+    "line": null,
+    "file": null,
+    "log.target": "sqlx::query",
+    "log.module_path": "sqlx::query",
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[SAVING NEW SUBSCRIBER DETAILS IN THE DATABASE - EVENT] INSERT INTO subscriptions (id, …; rows affected: 1, rows returned: 0, elapsed: 4.034ms\n\nINSERT INTO\n  subscriptions (id, email, name, subscribed_at)\nVALUES\n  ($1, $2, $3, $4)\n",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6812632Z",
+    "target": "log",
+    "line": null,
+    "file": null,
+    "log.module_path": "sqlx::query",
+    "log.target": "sqlx::query",
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}  
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[SAVING NEW SUBSCRIBER DETAILS IN THE DATABASE - END]",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6824107Z",
+    "target": "zero2prod::routes::subscriptions",
+    "line": 23,
+    "file": "src\\routes\\subscriptions.rs",
+    "elapsed_milliseconds": 12,
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[ADDING A NEW SUBSCRIBER - EVENT] New subscriber details have been saved",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6832203Z",
+    "target": "zero2prod::routes::subscriptions",
+    "line": 42,
+    "file": "src\\routes\\subscriptions.rs",
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "[ADDING A NEW SUBSCRIBER - END]",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6836763Z",
+    "target": "zero2prod::routes::subscriptions",
+    "line": 13,
+    "file": "src\\routes\\subscriptions.rs",
+    "elapsed_milliseconds": 14,
+    "subscriber_email": "abbbbmehdi.boudart@gmail.com151511155511111bbzzzdd",
+    "subscriber_name": "bbbbdddme11hdi12651777zzzz",
+    "request_id": "173af33a-5f22-4226-b4c4-f0d550b836a0"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "127.0.0.1 \"POST /subscriptions HTTP/1.1\" 200 0 \"-\" \"PostmanRuntime/7.29.0\" 0.016803",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6843376Z",
+    "target": "log",
+    "line": null,
+    "file": null,
+    "log.line": 351,
+    "log.module_path": "actix_web::middleware::logger",
+    "log.target": "actix_web::middleware::logger",
+    "log.file": "C:\\Users\\Mehdi\\.cargo\\registry\\src\\github.com-1ecc6299db9ec823\\actix-web-4.0.1\\src\\middleware\\logger.rs"
+}
+{
+    "v": 0,
+    "name": "zero2prod",
+    "msg": "/* SQLx ping */; rows affected: 0, rows returned: 0, elapsed: 467.100µs",
+    "level": 30,
+    "hostname": "DESKTOP-0QVASJM",
+    "pid": 6108,
+    "time": "2022-06-11T13:58:25.6872792Z",
+    "target":"l
