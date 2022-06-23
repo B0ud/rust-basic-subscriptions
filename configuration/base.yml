@@ -1,4 +1,8 @@
-application_port: 8000
+#! configuration.yml
+application:
+  port: 8080
+  host: localhost
+
 database:
   host: "127.0.0.1"
   port: 5432
