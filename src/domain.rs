@@ -34,11 +34,10 @@ impl SubscriberName {
             Self(s)
         }
     }
+}
 
-    pub fn inner_ref(&self) -> &str {
-        // The caller gets a shared reference to the inner string.
-        // This gives the caller **read-only** access,
-        // they have no way to compromise our invariants!
+impl AsRef<str> for SubscriberName {
+    fn as_ref(&self) -> &str {
         &self.0
     }
 }
