@@ -3,6 +3,7 @@ use crate::configuration::Settings;
 use crate::email_client::EmailClient;
 use crate::routes::*;
 use actix_web::dev::Server;
+use actix_web::web::Data;
 use actix_web::{web, App, HttpServer};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::PgPool;
@@ -61,7 +62,8 @@ pub fn run(
     db_pool: PgPool,
     email_client: EmailClient,
 ) -> Result<Server, std::io::Error> {
-    let db_pool = web::Data::new(db_pool);
+    let db_pool = Data::new(db_pool);
+    let email_client = Data::new(email_client);
     let server = HttpServer::new(move || {
         App::new()
             .wrap(TracingLogger::default())
