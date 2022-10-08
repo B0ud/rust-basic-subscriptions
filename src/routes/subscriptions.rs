@@ -1,5 +1,6 @@
 use crate::email_client::EmailClient;
 use crate::startup::ApplicationBaseUrl;
+use actix_web::http::StatusCode;
 use actix_web::{web, HttpResponse, ResponseError};
 use chrono::Utc;
 use rand::distributions::Alphanumeric;
@@ -159,7 +160,16 @@ impl std::fmt::Display for SubscribeError {
     }
 }
 impl std::error::Error for SubscribeError {}
-impl ResponseError for SubscribeError {}
+impl ResponseError for SubscribeError {
+    fn status_code(&self) -> StatusCode {
+        match self {
+            SubscribeError::ValidationError(_) => StatusCode::BAD_REQUEST,
+            SubscribeError::DatabaseError(_)
+            | SubscribeError::StoreTokenError(_)
+            | SubscribeError::SendEmailError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+        }
+    }
+}
 
 // A new error type, wrapping a sqlx::Error
 pub struct StoreTokenError(sqlx::Error);
