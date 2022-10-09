@@ -90,6 +90,7 @@ pub fn run(
             .route("/health", web::get().to(health_check))
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
+            .route("/newsletters", web::post().to(publish_newsletter))
     })
     .listen(listener)?
     .run();
