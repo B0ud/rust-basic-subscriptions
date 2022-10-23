@@ -6,6 +6,7 @@ all our SQL queries.
 ```
 cargo sqlx prepare -- --lib
 ```
+sqlx migrate run
 
 CONFIG WHIOT Environement variable 
 
