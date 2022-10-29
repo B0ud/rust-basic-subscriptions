@@ -80,6 +80,7 @@ pub async fn publish_newsletter(
     Ok(HttpResponse::Ok().finish())
 }
 
+#[tracing::instrument(name = "Validate credentials", skip(credentials, pool))]
 async fn validate_credentials(
     credentials: Credentials,
     pool: &PgPool,
