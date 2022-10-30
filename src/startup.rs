@@ -1,6 +1,7 @@
 use crate::configuration::DatabaseSettings;
 use crate::configuration::Settings;
 use crate::email_client::EmailClient;
+use crate::routes::login;
 use crate::routes::{
     confirm, echo, health_check, hello, home, login_form, manual_hello, publish_newsletter,
     subscribe,
@@ -95,6 +96,7 @@ pub fn run(
             .route("/newsletters", web::post().to(publish_newsletter))
             .route("/", web::get().to(home))
             .route("/login", web::get().to(login_form))
+            .route("/login", web::post().to(login))
     })
     .listen(listener)?
     .run();
