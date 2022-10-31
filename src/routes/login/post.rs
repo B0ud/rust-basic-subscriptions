@@ -1,7 +1,7 @@
 use crate::authentication::AuthError;
 use crate::authentication::{validate_credentials, Credentials};
 use crate::routes::error_chain_fmt;
-use actix_web::http::header::{ContentType, LOCATION};
+use actix_web::http::header::LOCATION;
 use actix_web::HttpResponse;
 use actix_web::{web, ResponseError};
 use reqwest::StatusCode;
@@ -58,8 +58,9 @@ impl ResponseError for LoginError {
     }
 
     fn error_response(&self) -> HttpResponse {
+        let encoded_error = urlencoding::Encoded::new(self.to_string());
         HttpResponse::build(self.status_code())
-            .insert_header((LOCATION, "/login"))
+            .insert_header((LOCATION, format!("/login?error={}", encoded_error)))
             .finish()
     }
 }
