@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/home/vagrant/app", disabled: false, type: "rsync", rsync__auto: true, rsync__exclude: ['.vagrant/', 'target/', '.git/']
 
     config.vm.network(:forwarded_port, guest: 5432, host: 5432)
+    config.vm.network(:forwarded_port, guest: 6379, host: 6379)
 
     config.vm.provision :docker
     config.vm.provision :docker_compose, yml: "/home/vagrant/app/docker-compose.yml", run: "always"
