@@ -19,3 +19,7 @@ services:
     restart: always
     ports:
       - '6379:6379'
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - 8001:8001
