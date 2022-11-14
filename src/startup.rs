@@ -3,6 +3,7 @@ use crate::configuration::Settings;
 use crate::email_client::EmailClient;
 use crate::routes::admin_dashboard;
 use crate::routes::login;
+use crate::routes::{change_password, change_password_form};
 use crate::routes::{
     confirm, echo, health_check, hello, home, login_form, manual_hello, publish_newsletter,
     subscribe,
@@ -124,6 +125,8 @@ pub async fn run(
             .route("/login", web::get().to(login_form))
             .route("/admin/dashboard", web::get().to(admin_dashboard))
             .route("/login", web::post().to(login))
+            .route("/admin/password", web::get().to(change_password_form))
+            .route("/admin/password", web::post().to(change_password))
     })
     .listen(listener)?
     .run();
