@@ -3,6 +3,7 @@ use anyhow::Context;
 use argon2::{Argon2, PasswordHash, PasswordVerifier};
 use secrecy::{ExposeSecret, Secret};
 use sqlx::PgPool;
+use tracing::info;
 
 #[derive(thiserror::Error, Debug)]
 pub enum AuthError {
@@ -22,6 +23,8 @@ pub async fn validate_credentials(
     credentials: Credentials,
     pool: &PgPool,
 ) -> Result<uuid::Uuid, AuthError> {
+    info!("Validate Credential");
+
     let mut user_id = None;
     let mut expected_password_hash = Secret::new(
         "$argon2id$v=19$m=15000,t=2,p=1$\

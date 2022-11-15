@@ -1,7 +1,7 @@
 use crate::authentication::{validate_credentials, AuthError, Credentials};
 use crate::routes::admin::dashboard::get_username;
 use crate::session_state::TypedSession;
-use crate::utils::{e500, see_other};
+use crate::utils::{e400, e500, see_other};
 use actix_web::{web, HttpResponse};
 use actix_web_flash_messages::FlashMessage;
 use secrecy::ExposeSecret;
@@ -37,6 +37,8 @@ impl FormData {
 pub enum InputFormChangePasswordError {
     #[error("{0}")]
     ValidationError(String),
+    #[error(transparent)]
+    UnexpectedError(#[from] anyhow::Error),
 }
 
 pub async fn change_password(
@@ -57,12 +59,13 @@ pub async fn change_password(
         .send();
         return Ok(see_other("/admin/password"));
     }
+    let input_form = form.0.parse().map_err(e400)?;
 
     let username = get_username(user_id, &pool).await.map_err(e500)?;
 
     let credentials = Credentials {
         username,
-        password: form.0.current_password,
+        password: input_form.current_password,
     };
 
     if let Err(e) = validate_credentials(credentials, &pool).await {
@@ -82,16 +85,42 @@ pub async fn change_password(
 mod tests {
     use crate::routes::admin::password::post::FormData;
     use claim::{assert_err, assert_ok};
+    use fake::{faker::internet::en::Password, Fake};
     use secrecy::Secret;
 
     #[test]
     fn a_password_longer_than_128_graphemes_is_rejected() {
-        let name = "a".repeat(129);
+        let password: String = Password(129..130).fake();
+        println!("Fake Password {}", password);
         let form = FormData {
-            current_password: Secret::new(name.clone()),
-            new_password: Secret::new(name.clone()),
-            new_password_check: Secret::new(name.clone()),
+            current_password: Secret::new(password.clone()),
+            new_password: Secret::new(password.clone()),
+            new_password_check: Secret::new(password.clone()),
         };
         assert_err!(form.parse());
+    }
+
+    #[test]
+    fn a_password_shorter_than_12_graphemes_is_rejected() {
+        let password: String = Password(10..12).fake();
+        println!("Fake Password {}", password);
+        let form = FormData {
+            current_password: Secret::new(password.clone()),
+            new_password: Secret::new(password.clone()),
+            new_password_check: Secret::new(password.clone()),
+        };
+        assert_err!(form.parse());
+    }
+
+    #[test]
+    fn a_password_is_valid() {
+        let password: String = Password(15..20).fake();
+        println!("Fake Password {}", password);
+        let form = FormData {
+            current_password: Secret::new(password.clone()),
+            new_password: Secret::new(password.clone()),
+            new_password_check: Secret::new(password.clone()),
+        };
+        assert_ok!(form.parse());
     }
 }
