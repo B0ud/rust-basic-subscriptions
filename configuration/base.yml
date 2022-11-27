@@ -1,6 +1,6 @@
 #! configuration.yml
 application:
-  port: 8080
+  port: 8000
   host: localhost
   hmac_secret: "long-and-very-secret-random-key-needed-to-verify-message-integrity"
 

@@ -1,7 +1,7 @@
 use crate::authentication::{validate_credentials, AuthError, Credentials};
 use crate::routes::admin::dashboard::get_username;
 use crate::session_state::TypedSession;
-use crate::utils::{e400, e500, see_other};
+use crate::utils::{e500, see_other};
 use actix_web::{web, HttpResponse};
 use actix_web_flash_messages::FlashMessage;
 use secrecy::ExposeSecret;
@@ -22,11 +22,14 @@ impl FormData {
         let is_too_long = s.graphemes(true).count() > 128;
         let is_too_short = s.graphemes(true).count() < 12;
 
-        if is_too_long || is_too_short {
-            Err(InputFormChangePasswordError::ValidationError(format!(
-                "{} Password not valid minimum requirment",
-                s
-            )))
+        if is_too_long {
+            Err(InputFormChangePasswordError::ValidationError(
+                "Password is too long - Shoud be shorter than 128".to_owned(),
+            ))
+        } else if is_too_short {
+            Err(InputFormChangePasswordError::ValidationError(
+                "Password is too short - Must be at least 12 characters long".to_owned(),
+            ))
         } else {
             Ok(self)
         }
@@ -59,7 +62,18 @@ pub async fn change_password(
         .send();
         return Ok(see_other("/admin/password"));
     }
-    let input_form = form.0.parse().map_err(e400)?;
+
+    let input_form = match form.0.parse() {
+        Ok(form_data) => form_data,
+        Err(e) => {
+            FlashMessage::error(format!(
+                "Password does not meet the conditions - {} ",
+                e.to_string()
+            ))
+            .send();
+            return Ok(see_other("/admin/password"));
+        }
+    };
 
     let username = get_username(user_id, &pool).await.map_err(e500)?;
 
