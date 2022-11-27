@@ -58,6 +58,58 @@ async fn new_password_fields_must_match() {
 }
 
 #[tokio::test]
+async fn new_password_is_too_short() {
+    // Arrange
+    let app = spawn_app().await;
+    let new_password = String::from("toshort");
+    // Act - Part 1 - Login
+    app.post_login(&serde_json::json!({
+    "username": &app.test_user.username,
+    "password": &app.test_user.password
+    }))
+    .await;
+    // Act - Part 2 - Try to change password
+    let response = app
+        .post_change_password(&serde_json::json!({
+        "current_password": &app.test_user.password,
+        "new_password": &new_password,
+        "new_password_check": &new_password,
+        }))
+        .await;
+    assert_is_redirect_to(&response, "/admin/password");
+    // Act - Part 3 - Follow the redirect
+    let html_page = app.get_change_password_html().await;
+    assert!(html_page
+        .contains("<p><i>Password does not meet the conditions - Password is too short - Must be at least 12 characters long </i></p>"));
+}
+
+#[tokio::test]
+async fn new_password_is_too_long() {
+    // Arrange
+    let app = spawn_app().await;
+    let new_password = (0..22).map(|_| "ToLong").collect::<String>();
+    // Act - Part 1 - Login
+    app.post_login(&serde_json::json!({
+    "username": &app.test_user.username,
+    "password": &app.test_user.password
+    }))
+    .await;
+    // Act - Part 2 - Try to change password
+    let response = app
+        .post_change_password(&serde_json::json!({
+        "current_password": &app.test_user.password,
+        "new_password": &new_password,
+        "new_password_check": &new_password,
+        }))
+        .await;
+    assert_is_redirect_to(&response, "/admin/password");
+    // Act - Part 3 - Follow the redirect
+    let html_page = app.get_change_password_html().await;
+    assert!(html_page
+        .contains("<p><i>Password does not meet the conditions - Password is too long - Shoud be shorter than 128 </i></p>"));
+}
+
+#[tokio::test]
 async fn current_password_must_be_valid() {
     // Arrange
     let app = spawn_app().await;
