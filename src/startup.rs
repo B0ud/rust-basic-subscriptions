@@ -5,8 +5,8 @@ use crate::routes::admin_dashboard;
 use crate::routes::login;
 use crate::routes::{change_password, change_password_form};
 use crate::routes::{
-    confirm, echo, health_check, hello, home, login_form, manual_hello, publish_newsletter,
-    subscribe,
+    confirm, echo, health_check, hello, home, log_out, login_form, manual_hello,
+    publish_newsletter, subscribe,
 };
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -127,6 +127,7 @@ pub async fn run(
             .route("/login", web::post().to(login))
             .route("/admin/password", web::get().to(change_password_form))
             .route("/admin/password", web::post().to(change_password))
+            .route("/admin/logout", web::post().to(log_out))
     })
     .listen(listener)?
     .run();
