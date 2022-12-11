@@ -115,8 +115,8 @@ jobs:
         image: postgres:14
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: newsletter
         ports:
           - 5432:5432
     env:
@@ -157,7 +157,8 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install libpq-dev -y
-          SKIP_DOCKER=true ./scripts/init_db.sh
+          sqlx database create
+          sqlx migrate run
 
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
@@ -218,7 +219,8 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install libpq-dev -y
-          SKIP_DOCKER=true ./scripts/init_db.sh
+          sqlx database create
+          sqlx migrate run
 
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
