@@ -46,7 +46,7 @@ tracing-log = "0.1"
 tracing-subscriber = {version = "0.3", features = ["registry", "env-filter"]}
 unicode-segmentation = "1"
 urlencoding = "2"
-uuid = {version = "0.8.2", features = ["v4", "serde"]}
+uuid = {version = "1", features = ["v4", "serde"]}
 validator = "0.15.0"
 
 [dependencies.sqlx]
@@ -60,7 +60,7 @@ features = [
   "migrate",
   "offline",
 ]
-version = "0.5.13"
+version = "0.6"
 
 [dependencies.reqwest]
 default-features = false
