@@ -228,7 +228,7 @@ jobs:
           args: "--ignore-tests --avoid-cfg-tarpaulin"
 
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
 
