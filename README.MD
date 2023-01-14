@@ -19,6 +19,7 @@ export RUST_LOG="sqlx=error,info"
 export TEST_LOG=enabled
 cargo t subscribe_fails_if_there_is_a_fatal_database_error | bunyan
 
+cargo t newsletter_creation_is_idempotent | bunyan
 
 cargo sqlx prepare --merged --database-url=postgres://postgres:postgres@localhost:5432/newsletter
 

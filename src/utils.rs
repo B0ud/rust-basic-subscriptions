@@ -1,5 +1,4 @@
 use actix_web::http::header::LOCATION;
-use actix_web::http::StatusCode;
 use actix_web::HttpResponse;
 
 // Return an opaque 500 while preserving the error root's cause for logging.
