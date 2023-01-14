@@ -1,4 +1,5 @@
 use actix_web::http::header::LOCATION;
+use actix_web::http::StatusCode;
 use actix_web::HttpResponse;
 
 // Return an opaque 500 while preserving the error root's cause for logging.
@@ -9,12 +10,12 @@ where
     actix_web::error::ErrorInternalServerError(e)
 }
 
-// Return an opaque 500 while preserving the error root's cause for logging.
-pub fn e400<T>(e: T) -> actix_web::Error
+// Return a 400 with the user-representation of the validation error as body.
+// The error root cause is preserved for logging purposes.
+pub fn e400<T: std::fmt::Debug + std::fmt::Display>(e: T) -> actix_web::Error
 where
     T: std::fmt::Debug + std::fmt::Display + 'static,
 {
-    println!("Test Mapping 400");
     actix_web::error::ErrorBadRequest(e)
 }
 
