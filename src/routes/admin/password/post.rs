@@ -62,11 +62,7 @@ pub async fn change_password(
     let input_form = match form.0.parse() {
         Ok(form_data) => form_data,
         Err(e) => {
-            FlashMessage::error(format!(
-                "Password does not meet the conditions - {} ",
-                e.to_string()
-            ))
-            .send();
+            FlashMessage::error(format!("Password does not meet the conditions - {} ", e)).send();
             return Ok(see_other("/admin/password"));
         }
     };
@@ -84,7 +80,7 @@ pub async fn change_password(
                 FlashMessage::error("The current password is incorrect.").send();
                 Ok(see_other("/admin/password"))
             }
-            AuthError::UnexpectedError(_) => Err(e500(e).into()),
+            AuthError::UnexpectedError(_) => Err(e500(e)),
         };
     }
     crate::authentication::change_password(*user_id, input_form.new_password, &pool)
